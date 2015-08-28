@@ -17,7 +17,7 @@ exports.plugin = function(VaporAPI) {
     // Construct CMsgClientGamesPlayed message
     var message = {games_played: []};
     for(var i = 0; i < config.games.length; i++) {
-        message.push({game_id: config.games[i]});
+        message.games_played.push({game_id: config.games[i]});
     }
 
     VaporAPI.registerHandler({
@@ -29,8 +29,10 @@ exports.plugin = function(VaporAPI) {
                 if(message === '!idle') {
                     if(isIdling) {
                         steamUser.gamesPlayed({games_played:[]});
+                        log.info('Stopped idling.');
                     } else {
                         steamUser.gamesPlayed(message);
+                        log.info('Started idling in the following games: %s', config.games.join(','));
                     }
 
                     isIdling = !isIdling;
@@ -47,6 +49,7 @@ exports.plugin = function(VaporAPI) {
             },
             function() {
                 steamUser.gamesPlayed(message);
+                log.info('Idling has been started automatically.');
                 isIdling = true;
             }
         );
