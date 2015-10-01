@@ -22,10 +22,10 @@ var idler = require('vapor-idler');
 
 // Instantiate Vapor etc.
 
-vapor.use(idler, {config: {
+vapor.use(idler, {
     games: [440, 730],
     autoStart: true
-}});
+});
 ```
 
 ### Configuration

@@ -6,11 +6,10 @@ exports.plugin = function(VaporAPI) {
     var steamUser = VaporAPI.getHandler('steamUser');
     var utils = VaporAPI.getUtils();
     var Steam = VaporAPI.getSteam();
-    var log = VaporAPI.getLogger();
 
-    var config = (VaporAPI.data && VaporAPI.data.config) ? VaporAPI.data.config : {};
+    var config = VaporAPI.data || {};
     if(!('games' in config)) {
-        log.error('Array of game IDs in your config is missing.');
+        VaporAPI.emitEvent('message:error', 'Array of game IDs in your config is missing.');
         return;
     }
 
@@ -29,10 +28,10 @@ exports.plugin = function(VaporAPI) {
                 if(message === '!idle') {
                     if(isIdling) {
                         steamUser.gamesPlayed({games_played:[]});
-                        log.info('Stopped idling.');
+                        VaporAPI.emitEvent('message:info', 'Stopped idling.');
                     } else {
                         steamUser.gamesPlayed(clientMessage);
-                        log.info('Started idling in the following games: %s', config.games.join(','));
+                        VaporAPI.emitEvent('message:info', 'Started idling in the following games: ' + config.games.join(','));
                     }
 
                     isIdling = !isIdling;
@@ -49,7 +48,7 @@ exports.plugin = function(VaporAPI) {
             },
             function() {
                 steamUser.gamesPlayed(clientMessage);
-                log.info('Idling has been started automatically.');
+                VaporAPI.emitEvent('message:info', 'Idling has been started automatically.');
                 isIdling = true;
             }
         );
