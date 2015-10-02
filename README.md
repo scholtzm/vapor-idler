@@ -38,11 +38,19 @@ Array of game IDs.
 
 Whether to start automatically right after logging in. Default value: `false`
 
+### Events
+
+#### `message:*`
+
+* `message` - A message string.
+
+Standard [message events](https://github.com/scholtzm/vapor/blob/master/docs/EVENTS.md#message) to be used with logger.
+
 ### Commands
 
 Command | Description
 ------- | -----------
-!idle | Enable or disable the idling process. Available only to admins.
+`!idle` | Enable or disable the idling process. Available only to admins.
 
 ### License
 
