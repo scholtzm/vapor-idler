@@ -23,8 +23,8 @@ var idler = require('vapor-idler');
 // Instantiate Vapor etc.
 
 vapor.use(idler, {
-    games: [440, 730],
-    autoStart: true
+  games: [440, 730],
+  autoStart: true
 });
 ```
 
